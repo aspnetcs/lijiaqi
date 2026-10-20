@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>注册 - 情绪-资金流分析系统</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <form method="post" action="/register" class="card">
+    <h2>注册账号</h2>
+    <div class="field">
+      <label>用户名 (至少3位)</label>
+      <input type="text" name="username" required minlength="3">
+    </div>
+    <div class="field">
+      <label>密码 (至少6位)</label>
+      <input type="password" name="password" required minlength="6">
+    </div>
+    <div class="field">
+      <label>验证码</label>
+      <div class="captcha-row">
+        <input type="text" name="captcha" placeholder="请输入验证码" maxlength="4" required>
+        <img src="/captcha" class="captcha-img" id="cap" title="点击刷新" onclick="this.src='/captcha?t='+Date.now()">
+      </div>
+    </div>
+    <button class="btn" type="submit">注 册</button>
+    <div class="link">已有账号? <a href="/login">去登录</a></div>
+  </form>
+</body>
+</html>

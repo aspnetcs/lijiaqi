@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>仪表盘 - 情绪-资金流分析系统</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="dash">
+    <header>
+      <h2>情绪-资金流融合分析系统</h2>
+      <span class="user">{{ username }} | <a href="/logout">退出</a></span>
+    </header>
+    <div class="grid">
+      <div class="box">
+        <h3>市场情绪分析</h3>
+        <input type="date" id="sent-date" value="2025-06-16">
+        <button class="btn" onclick="call('/api/sentiment',{date:val('sent-date')},'sent-res')">分析情绪</button>
+        <div class="result" id="sent-res"></div>
+      </div>
+
+      <div class="box">
+        <h3>个股资金流分析</h3>
+        <input type="text" id="flow-symbol" value="600000" placeholder="6位股票代码">
+        <input type="date" id="flow-date" value="2025-06-13">
+        <button class="btn" onclick="call('/api/flow',{symbol:val('flow-symbol'),date:val('flow-date')},'flow-res')">分析资金流</button>
+        <div class="result" id="flow-res"></div>
+      </div>
+
+      <div class="box">
+        <h3>宏观择时仓位</h3>
+        <input type="date" id="macro-date" value="2025-06-16">
+        <button class="btn" onclick="call('/api/macro',{date:val('macro-date'),sentiment_score:0},'macro-res')">计算仓位</button>
+        <div class="result" id="macro-res"></div>
+      </div>
+
+      <div class="box">
+        <h3>融合决策</h3>
+        <input type="number" id="fuse-sent" value="-0.02" step="0.01" placeholder="情绪得分">
+        <input type="number" id="fuse-flow" value="0.14" step="0.01" placeholder="资金流得分">
+        <input type="number" id="fuse-macro" value="0.10" step="0.01" placeholder="宏观仓位">
+        <button class="btn" onclick="call('/api/fuse',{sentiment:+val('fuse-sent'),flow:+val('fuse-flow'),macro_position:+val('fuse-macro')},'fuse-res')">融合决策</button>
+        <div class="result" id="fuse-res"></div>
+      </div>
+
+      <div class="box" style="grid-column:1/-1">
+        <h3>回测 (约2-5分钟/年)</h3>
+        <div style="display:flex;gap:10px">
+          <input type="date" id="bt-start" value="2025-01-01" style="flex:1">
+          <input type="date" id="bt-end" value="2026-01-01" style="flex:1">
+          <button class="btn" style="flex:0 0 120px" onclick="call('/api/backtest',{start_date:val('bt-start'),end_date:val('bt-end')},'bt-res')">运行回测</button>
+        </div>
+        <div class="result" id="bt-res"></div>
+      </div>
+
+      <div class="box" style="grid-column:1/-1">
+        <h3>大数据平台 (HDFS + PySpark)</h3>
+        <div style="display:flex;gap:10px">
+          <button class="btn" style="flex:1" onclick="callGet('/api/bigdata/summary','bd-res')">刷新平台状态</button>
+          <button class="btn" style="flex:1" onclick="callGet('/api/bigdata/logs','bd-res')">登录审计日志</button>
+        </div>
+        <div style="margin-top:6px;color:#888">Spark 批处理作业: <code>python -m src.bigdata.spark_jobs --job all</code> (全市场因子计算 / 数据质量聚合 / 登录日志统计)</div>
+        <div class="result" id="bd-res"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+function val(id){ return document.getElementById(id).value; }
+function call(url, data, outId){
+  const out = document.getElementById(outId);
+  out.textContent = '请求中...';
+  fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
+    .then(r => r.json().then(j => r.ok ? j : Promise.reject(j)))
+    .then(j => out.textContent = JSON.stringify(j, null, 2))
+    .catch(e => out.textContent = '错误: ' + JSON.stringify(e));
+}
+function callGet(url, outId){
+  const out = document.getElementById(outId);
+  out.textContent = '请求中...';
+  fetch(url)
+    .then(r => r.json().then(j => r.ok ? j : Promise.reject(j)))
+    .then(j => out.textContent = JSON.stringify(j, null, 2))
+    .catch(e => out.textContent = '错误: ' + JSON.stringify(e));
+}
+</script>
+</body>
+</html>

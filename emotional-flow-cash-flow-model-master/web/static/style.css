@@ -1,0 +1,29 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft YaHei", sans-serif; background: linear-gradient(135deg, #1e3c72, #2a5298); min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #333; }
+.card { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,.3); width: 380px; }
+.card h2 { text-align: center; margin-bottom: 24px; color: #1e3c72; }
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13px; margin-bottom: 6px; color: #555; }
+.field input { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+.field input:focus { outline: none; border-color: #2a5298; }
+.captcha-row { display: flex; gap: 10px; align-items: center; }
+.captcha-row input { flex: 1; }
+.captcha-img { height: 44px; border-radius: 6px; cursor: pointer; }
+.btn { width: 100%; padding: 12px; background: #2a5298; color: #fff; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; margin-top: 8px; }
+.btn:hover { background: #1e3c72; }
+.link { text-align: center; margin-top: 16px; font-size: 13px; }
+.link a { color: #2a5298; text-decoration: none; }
+.msg { text-align: center; color: #e74c3c; margin-bottom: 12px; font-size: 13px; min-height: 18px; }
+
+/* dashboard */
+.dash { width: 900px; max-width: 95vw; }
+.dash header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.dash header h2 { color: #fff; margin: 0; }
+.dash header .user { color: #cce; font-size: 13px; }
+.dash header a { color: #fff; padding: 6px 14px; border: 1px solid rgba(255,255,255,.4); border-radius: 6px; text-decoration: none; font-size: 13px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.box { background: #fff; padding: 20px; border-radius: 10px; }
+.box h3 { color: #1e3c72; margin-bottom: 12px; font-size: 15px; }
+.box input, .box select { width: 100%; padding: 8px 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 13px; }
+.box .btn { margin-top: 4px; padding: 10px; }
+.result { margin-top: 12px; padding: 12px; background: #f5f7fa; border-radius: 6px; font-family: Consolas, monospace; font-size: 12px; max-height: 260px; overflow: auto; white-space: pre-wrap; word-break: break-all; }

@@ -1,0 +1,6 @@
+Set-Location "D:\毕业设计\emotional-flow-cash-flow-model-master"
+$env:PYTHONDONTWRITEBYTECODE = "1"
+$env:HADOOP_HOME = "D:\hadoop-3.3.6"
+$env:JAVA_HOME = "F:\jdk11.0.23"
+$env:Path = "$env:Path;D:\hadoop-3.3.6\bin"
+python web/app.py *>> "D:\毕业设计\emotional-flow-cash-flow-model-master\output\web_server.log"
